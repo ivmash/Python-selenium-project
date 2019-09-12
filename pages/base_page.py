@@ -34,13 +34,17 @@ class BasePage:
     def should_be_login_link(self):
         assert self.is_element_present(*BasePageLocators.LOGIN_LINK),"Login link is not present"
 
+    def should_be_authorized_user(self):
+        assert self.is_element_present(*BasePageLocators.USER_ICON), "User icon is not presented"
+
     def solve_quiz_and_get_code(self):
-        alert = self.browser.switch_to.alert
-        x = alert.text.split(" ")[2]
-        answer = str(math.log(abs((12 * math.sin(float(x))))))
-        alert.send_keys(answer)
-        alert.accept()
         try:
+            WebDriverWait(self.browser, 5).until(EC.alert_is_present())
+            alert = self.browser.switch_to.alert
+            x = alert.text.split(" ")[2]
+            answer = str(math.log(abs((12 * math.sin(float(x))))))
+            alert.send_keys(answer)
+            alert.accept()
             WebDriverWait(self.browser, 5).until(EC.alert_is_present())
             alert = self.browser.switch_to.alert
             alert_text = alert.text

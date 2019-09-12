@@ -10,7 +10,7 @@ class ProductPage(BasePage):
     def add_to_basket(self):
         self.browser.find_element(*ProductPageLocator.ADD_TO_BASKET_BUTTON).click()
 
-    def should_not_be_success_messages(self):
+    def should_be_success_messages(self):
         WebDriverWait(self.browser, 5).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, "div[id='messages'] > div:nth-child(1)")))
         assert self.is_element_present(*ProductPageLocator.SUCCESS_MESSAGE), "First message is not present"
